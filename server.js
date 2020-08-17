@@ -22,6 +22,15 @@ app.get('/:room', (req, res) => {
 
 app.use('/peerjs', peerServer);
 
+peerServer.on("disconnect", function(conf) {
+    console.log(conf.id, " has disconnected from the PeerServer");
+    io.emit('user-disconnected', conf.id)
+});
+
+peerServer.on("connection", function(conf) {
+    console.log(conf.id, " has connected to the PeerServer");
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {

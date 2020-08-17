@@ -16,9 +16,19 @@ navigator.mediaDevices.getUserMedia({
 }).then(stream => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream);
+    
     socket.on('user-connected', (userId) => {
         connectNewUser(userId, stream);
     });
+
+    socket.on('user-disconnected', (userId) => {
+        const elem = document.getElementById(userId);
+        console.log('user disconnected...', userId);
+        if (elem) {
+            elem.remove();
+        }
+    });
+
     peer.on('call', call => {
         call.answer(stream);
         const video = document.createElement('video');
@@ -28,11 +38,19 @@ navigator.mediaDevices.getUserMedia({
             addVideoStream(video, userVideoStream);
         });
     })
+
+    peer.on('error', function(peerId) {
+        console.log("peer disconnect from me!", peerId);
+    });
 });
 
 peer.on('open', id => {
     console.log(id, 'peerId:');
     socket.emit('join-room', roomId, id);
+});
+
+peer.on('error', function(peerId) {
+    console.log("peer disconnect from me!", peerId);
 });
 
 const connectNewUser = (userId, stream) => {
