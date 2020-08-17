@@ -32,10 +32,16 @@ video {
 }
 
 .main__controls {
-    flex-grow: 1;
+    flex-grow: 0.1;
     width: 100%;
     color: #fff;
-    padding: 10px;
+    background: #201a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main__controls_block {
     display: flex;
     align-items: center;
 }
@@ -48,10 +54,26 @@ video {
 }
 
 .main__controls-button {
-    padding: 5px;
+    padding: 8px 10px;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 80px;
+}
+
+.main__controls-button i {
+    font-size: 22px;
 }
 
 .main__controls-button:hover {
    opacity: 0.9;
+}
+
+.main__controls-leave-meeting {
+    color: #f71212;
+}
+.main__controls-leave-meeting:hover {
+    text-decoration: underline;
 }
