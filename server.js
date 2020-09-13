@@ -13,11 +13,19 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.redirect(`/${uuid.v4()}`);
+    res.render('pages/index');
 });
 
-app.get('/:room', (req, res) => {
-    res.render('room', { roomId: req.params.room });
+app.get('/sign-in', (req, res) => {
+    res.render('pages/sign-in');
+});
+
+app.get('/j', (req, res) => {
+    res.redirect(`/j/${uuid.v4()}`);
+});
+
+app.get('/j/:room', (req, res) => {
+    res.render('pages/room', { roomId: req.params.room });
 });
 
 app.use('/peerjs', peerServer);
@@ -45,6 +53,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(5000, () => {
-    console.log('Listening on port 5000..')
+server.listen(8080, () => {
+    console.log('Listening on port 8080..')
 });
